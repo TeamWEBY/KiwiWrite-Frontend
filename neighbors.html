@@ -2,98 +2,32 @@
 <html>
 <head>
     <title>내 웹사이트</title>
-    <link rel="stylesheet" type="text/css" href="style2.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        #container {
-            display: flex;
-            height: 100vh;
-        }
-        #menu {
-            background-color: #f2f2f2;
-            padding: 10px;
-        }
-        #logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: black;
-            margin-bottom: 10px;
-        }
-        #menu ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-        #menu li {
-            margin-bottom: 10px;
-        }
-        #menu li a {
-            text-decoration: none;
-            color: black;
-        }
-        #content {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #centered-content {
-            text-align: center;
-        }
-        #keyword {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
+        /* 이전에 있던 스타일들은 그대로 두고, 추가한 스타일을 아래에 작성합니다 */
+
+        /* 이웃목록 글씨 오른쪽 옆에 "필명 검색" 추가 */
         #title {
             font-size: 18px;
+            font-weight: normal;
             display: flex;
+            justify-content: space-between; /* 이웃목록 글씨와 "필명 검색" 사이의 간격을 벌리기 위해 사용합니다 */
         }
-        
-        #editor-container {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
+
+        #nickname-search {
+            font-size: 18px;
+            color: black;
+            font-weight:normal;
         }
-        #post-title {
-            width: 300px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        #post-content {
-            width: 300px;
-            padding: 10px;
-            height: 200px;
-            margin-bottom: 10px;
-        }
-        #post-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            text-align: left;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-            width: 600px; /* 가로 크기를 2배로 확장 */
-        }
-        .post-item {
-            position: relative;
-            padding: 20px;
-        }
-        .post-item::before {
-            content: attr(data-time);
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 12px;
-            color: #999;
+
+        #keyword {
+            font-size: 28px; /* 크기를 늘림 */
+            font-weight: bold; /* 이웃들의 글과 같은 굵기로 설정 */
+            margin-bottom: 90px; /* 위로 올림 */
         }
     </style>
+  
 </head>
 <body>
     <div id="container">
@@ -109,7 +43,7 @@
         <div id="content">
             <div id="centered-content">
                 <div id="keyword">이웃들의 글</div>
-                <h1 id="title">이웃목록</h1>
+                <h1 id="title">이웃목록<span id="nickname-search">필명 검색</span></h1>
                 <div id="editor-container">
                     <input type="text" id="post-title" placeholder="제목">
                     <textarea id="post-content" placeholder="내용"></textarea>
