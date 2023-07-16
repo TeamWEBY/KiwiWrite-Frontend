@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: border-box;
+} 
+
+.content {
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
+} 
+
+.keywordContent {
+  border: 1px solid black;
+  width: 100%;
+  height: 800px;
+}
