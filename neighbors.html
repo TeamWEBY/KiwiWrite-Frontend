@@ -5,14 +5,14 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js"></script>
     <style>
-        /* 이전에 있던 스타일들은 그대로 두고, 추가한 스타일을 아래에 작성합니다 */
+        /* 이전에 있던 스타일들은 그대로 두고, 추가한 스타일을 아래에 작성 */
 
         /* 이웃목록 글씨 오른쪽 옆에 "필명 검색" 추가 */
         #title {
             font-size: 18px;
             font-weight: normal;
             display: flex;
-            justify-content: space-between; /* 이웃목록 글씨와 "필명 검색" 사이의 간격을 벌리기 위해 사용합니다 */
+            justify-content: space-between; /* 이웃목록 글씨와 "필명 검색" 사이의 간격을 벌리기 위해 사용 */
         }
 
         #nickname-search {
@@ -32,10 +32,10 @@
 <body>
     <div id="container">
         <div id="menu">
-            <div id="logo">로고</div>
+            <div id="logo" onclick="goToHomePage()" onmouseover="changeCursor('pointer')" onmouseout="changeCursor('default')">로고</div>
             <ul>
-                <li><a href="#">글쓰기</a></li>
-                <li><a href="#">탐색하기</a></li>
+                <li><a href="#" onclick="goToWritePage()">글쓰기</a></li>
+                <li><a href="#" onclick="goToSeacher()">탐색하기</a></li>
                 <li><a href="#" onclick="goToNeighbors()">이웃들</a></li>
                 <li><a href="#">내 프로필</a></li>
             </ul>
@@ -55,5 +55,25 @@
             </div>
         </div>
     </div>
+    <script>
+        function goToWritePage() {
+            // writel.html 파일로 이동
+            window.location.href = "writel.html";
+        }
+
+        function changeCursor(cursorType) {
+            // 마우스 커서 모양 변경
+            document.getElementById("logo").style.cursor = cursorType;
+        }
+
+        function goToHomePage() {
+            // "사이트.html" 파일로 이동
+            window.location.href = "사이트.html";
+        }
+
+        function goToSeacher(){
+            window.location.href="search.html";
+        }
+    </script>
 </body>
 </html>
