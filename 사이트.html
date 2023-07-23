@@ -3,15 +3,47 @@
 <head>
     <title>내 웹사이트</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <style>
+        /* 여기에 스타일을 추가하기! */
+        .post-item {
+            position: relative;
+            padding: 20px;
+            border-bottom: 1px solid #ccc; /* 글목록 간에 테두리 한 줄 추가 */
+            margin-bottom: 20px; /* 글목록 위아래 간격 더 넓게 수정 */
+        }
+
+        .post-item:last-child {
+            border-bottom: none; /* 마지막 글목록은 테두리 제거 */
+        }
+
+        .post-item .time {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 글 삭제 버튼 스타일 */
+        .delete-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: red;
+        }
+    </style>
     <script src="script.js"></script>
 </head>
 <body>
     <div id="container">
         <div id="menu">
-            <div id="logo">로고</div>
+            <div id="logo" onclick="goToHomePage()" onmouseover="changeCursor('pointer')" onmouseout="changeCursor('default')">로고</div>
             <ul>
-                <li><a href="#">글쓰기</a></li>
-                <li><a href="#">탐색하기</a></li>
+               
+                <li><a href="#" onclick="goToWritePage()">글쓰기</a></li>
+                <li><a href="#" onclick="goToSeacher()">탐색하기</a></li>
                 <li><a href="#" onclick="goToNeighbors()">이웃들</a></li>
                 <li><a href="#">내 프로필</a></li>
             </ul>
@@ -20,15 +52,81 @@
             <div id="centered-content">
                 <div id="keyword">오늘의 키워드:</div>
                 <h1 id="title">여름 &amp; 불꽃</h1>
-                <div id="editor-container">
-                    <input type="text" id="post-title" placeholder="제목">
-                    <textarea id="post-content" placeholder="내용"></textarea>
-                    <button id="save-button">작성</button>
-                </div>
-                <button id="write-button" onclick="toggleEditor()">글쓰기</button>
+                <!-- 글목록을 표시할 리스트 추가 -->
                 <ul id="post-list"></ul>
             </div>
         </div>
     </div>
+
+    <script>
+        // JavaScript 코드는 그대로 유지됩니다.
+        function goToHomePage() {
+            // "사이트.html" 파일로 이동
+            window.location.href = "사이트.html";
+        }
+        function goToWritePage() {
+            // writel.html 파일로 이동
+            window.location.href = "writel.html";
+        }
+
+        function changeCursor(cursorType) {
+            // 마우스 커서 모양 변경
+            document.getElementById("logo").style.cursor = cursorType;
+        }
+
+        // 글 삭제 함수
+        function deletePost(index) {
+            // localStorage에서 저장된 글 불러오기
+            var savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
+
+            // 해당 인덱스에 있는 글 삭제
+            savedPosts.splice(index, 1);
+
+            // 수정된 글 목록을 다시 저장
+            localStorage.setItem('posts', JSON.stringify(savedPosts));
+
+            // 글 목록 갱신하여 삭제된 글을 반영
+            showPostList();
+        }
+
+        // 글 목록을 표시하는 함수
+        function showPostList() {
+            var savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
+            var postList = document.getElementById('post-list');
+
+            // 글 목록 초기화
+            postList.innerHTML = '';
+
+            // 기존 저장된 글 목록을 표시
+            for (var i = 0; i < savedPosts.length; i++) {
+                var post = savedPosts[i];
+                var listItem = document.createElement('li');
+                listItem.classList.add('post-item');
+
+                // 작성 시간을 현재 시간으로 설정
+                var now = new Date();
+                var time = now.getHours() + ':' + now.getMinutes();
+
+                // 글 삭제 버튼 추가
+                var deleteButton = document.createElement('span');
+                deleteButton.classList.add('delete-button');
+                deleteButton.textContent = '삭제';
+                deleteButton.setAttribute('onclick', 'deletePost(' + i + ')');
+                listItem.appendChild(deleteButton);
+
+                listItem.innerHTML += '<h3>' + post.title + '</h3><p>' + post.content + '</p><p class="time">작성 시간: ' + time + '</p>';
+                postList.appendChild(listItem);
+            }
+        }
+
+        // 메인 페이지 로드 시 실행되는 함수
+        window.onload = function() {
+            showPostList();
+        };
+
+        function goToSeacher(){
+            window.location.href="search.html";
+        }
+    </script>
 </body>
 </html>
