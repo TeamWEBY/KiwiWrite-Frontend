@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>내 웹사이트</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+    <style>
+
+        #title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+        #nickname-search {
+            font-size: 18px;
+            color: black;
+            font-weight:normal;
+        }
+
+
+        
+    </style>
+  
+</head>
+<body>
+    <div id="container">
+        <div id="menu">
+            <div id="logo" onclick="goToHomePage()" onmouseover="changeCursor('pointer')" onmouseout="changeCursor('default')">로고</div>
+            <ul>
+                <li><a href="#" onclick="goToWritePage()">글쓰기</a></li>
+                <li><a href="#" onclick="goToSeacher()">탐색하기</a></li>
+                <li><a href="#" onclick="goToNeighbors()">이웃들</a></li>
+                <li><a href="#">내 프로필</a></li>
+            </ul>
+        </div>
+        <div id="content">
+            <div id="centered-content">
+                <div id="keyword">오늘의 키워드:</div>
+                <h1 id="title">여름 &amp; 불꽃</h1>
+                <div id="editor-container">
+                    <input type="text" id="post-title" placeholder="제목">
+                    <textarea id="post-content" placeholder="내용"></textarea>
+                    <button id="save-button">작성</button>
+                </div>
+                <button id="write-button" onclick="toggleEditor()">글쓰기</button>
+                <ul id="post-list" onclick="goToPost(event)" onmouseover="changeCursor('pointer')" onmouseout="changeCursor('default')"></ul>
+            
+            </div>
+        </div>
+    </div>
+    <script>
+        function goToWritePage() {
+            // writel.html 파일로 이동
+            window.location.href = "writel.html";
+        }
+
+        function changeCursor(cursorType) {
+            // 마우스 커서 모양 변경
+            document.getElementById("logo").style.cursor = cursorType;
+            document.getElementById("post-list").style.cursor = cursorType;
+        }
+
+        function goToHomePage() {
+            // "사이트.html" 파일로 이동
+            window.location.href = "사이트.html";
+        }
+
+        function goToSeacher(){
+            window.location.href="search.html";
+        }
+        function goToPost(event) {
+    // 클릭한 요소의 태그 이름이 "LI"인 경우에만 처리
+    if (event.target.tagName === "LI") {
+      // 클릭한 글 제목의 텍스트를 가져와서 post.html로 이동
+      const postTitle = event.target.innerText;
+      window.location.href = "post2.html?title=" + encodeURIComponent(postTitle);
+    }
+  }
+    </script>
+</body>
+</html>
