@@ -1,25 +1,22 @@
-/*희서벗 글쓰기 코드 아이디어가 되게 좋은 것 같아서 일단은 제틀내에서 따라ㅐㅎ봣어용!ㅎㅎ!! 여기서 댓글기능이나 저만의 부가적인 기능은 다음주에 수정할 예정입니닷!!*/
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>내 웹사이트</title>
+    <title>내 웹사이트 - 글쓰기</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="main.css">
     <style>
-        /* 여기에 스타일을 추가할 수 있습니다. */
-       
-        }
+      
+    
     </style>
     <script src="script.js"></script>
 </head>
 <body>
     <div id="container">
         <div id="menu">
-            <div id="logo">로고</div>
+            <div id="logo" onclick="goToHomePage()" onmouseover="changeCursor('pointer')" onmouseout="changeCursor('default')">로고</div>
             <ul>
                 <li><a href="#">글쓰기</a></li>
-                <li><a href="#">탐색하기</a></li>
+                <li><a href="#" onclick="goToSeacher()">탐색하기</a></li>
                 <li><a href="#" onclick="goToNeighbors()">이웃들</a></li>
                 <li><a href="#">내 프로필</a></li>
             </ul>
@@ -52,7 +49,7 @@
                         </div>
                     </div>
 
-                    <button class="submitBtn">작성 완료</button>
+                    <button class="submitBtn" onclick="savePost()">작성 완료</button>
                 </div>
 
                 <div class="completionPage" style="display: none;">
@@ -60,7 +57,12 @@
                         오늘의 키워드로 한번 글 작성을 완료 했어요!<br>
                         하나 더 쓰고 싶나요?
                     </div>
-                    <button class="writeMoreButton">하나 더 쓰기</button>
+                    <button class="writeMoreButton" onclick="writeMore()">하나 더 쓰기</button>
+                </div>
+
+                <div class="postList" style="display: none;">
+                    <h2>글 목록</h2>
+                    <ul id="post-list"></ul>
                 </div>
             </div>
         </div>
@@ -74,6 +76,7 @@
         const submitButton = document.querySelector('.submitBtn');
         const completionPage = document.querySelector('.completionPage');
         const writeMoreButton = document.querySelector('.writeMoreButton');
+        const postList = document.querySelector('.postList');
 
         contentInput.addEventListener('input', function() {
             const content = this.value;
@@ -89,15 +92,89 @@
             }
         });
 
-        submitButton.addEventListener('click', function() {
-            document.querySelector('.writingSection').style.display = 'none';
-            completionPage.style.display = 'block';
-        });
+        function changeCursor(cursorType) {
+            // 마우스 커서 모양 변경
+            document.getElementById("logo").style.cursor = cursorType;
+        }
 
-        writeMoreButton.addEventListener('click', function() {
+        function goToHomePage() {
+            // "사이트.html" 파일로 이동
+            window.location.href = "사이트.html";
+        }
+
+        function savePost() {
+            // 글 작성 폼에서 작성한 내용을 가져와서 localStorage에 저장
+            var title = document.querySelector(".titleInput").value;
+            var content = document.querySelector(".contentInput").value;
+
+            if (title && content) {
+                var post = {
+                    title: title,
+                    content: content
+                };
+                // 기존 저장된 글 목록을 가져오기
+                var savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
+
+                // 새로 작성한 글을 목록에 추가
+                savedPosts.push(post);
+
+                // 수정된 글 목록을 다시 저장
+                localStorage.setItem('posts', JSON.stringify(savedPosts));
+
+                document.querySelector('.writingSection').style.display = 'none';
+                completionPage.style.display = 'block';
+            } else {
+                alert('제목과 내용을 입력해주세요!');
+            }
+        }
+
+        function writeMore() {
+            // 글 작성 폼 리셋하고 다시 글쓰기 화면 보여주기
+            document.querySelector(".titleInput").value = "";
+            document.querySelector(".contentInput").value = "";
+            document.querySelector('.completionPage').style.display = 'none';
             document.querySelector('.writingSection').style.display = 'block';
-            completionPage.style.display = 'none';
-        });
+        }
+
+        function goToWritePage() {
+            // writel.html 파일로 이동
+            window.location.href = "writel.html";
+        }
+
+        // 사이트.html에서 글 목록을 표시하는 함수
+        function showPostList() {
+            var savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
+            var postList = document.getElementById('post-list');
+
+            // 글 목록 초기화
+            postList.innerHTML = '';
+
+            // 기존 저장된 글 목록을 표시
+            for (var i = 0; i < savedPosts.length; i++) {
+                var post = savedPosts[i];
+                var listItem = document.createElement('li');
+                listItem.classList.add('post-item');
+
+                // 작성 시간을 현재 시간으로 설정
+                var now = new Date();
+                var time = now.getHours() + ':' + now.getMinutes();
+
+                listItem.innerHTML = '<h3>' + post.title + '</h3><p>' + post.content + '</p><p class="time">작성 시간: ' + time + '</p>';
+                postList.appendChild(listItem);
+            }
+        }
+
+        // 메인 페이지 로드 시 실행되는 함수
+        window.onload = function() {
+            // 현재 페이지가 writel.html일 경우 글 목록 표시
+            if (window.location.href.includes('writel.html')) {
+                showPostList();
+            }
+        };
+
+        function goToSeacher(){
+            window.location.href="search.html";
+        }
     </script>
 </body>
 </html>
