@@ -5,7 +5,9 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js"></script>
     <style>
+        /* 이전에 있던 스타일들은 그대로 두고, 추가한 스타일을 아래에 작성합니다 */
 
+        /* 이웃목록 글씨 오른쪽 옆에 "필명 검색" 추가 */
         #title {
   font-size: 48px;
   font-weight: bold;
@@ -68,14 +70,18 @@
         function goToSeacher(){
             window.location.href="search.html";
         }
+   
         function goToPost(event) {
     // 클릭한 요소의 태그 이름이 "LI"인 경우에만 처리
     if (event.target.tagName === "LI") {
       // 클릭한 글 제목의 텍스트를 가져와서 post.html로 이동
       const postTitle = event.target.innerText;
       window.location.href = "post2.html?title=" + encodeURIComponent(postTitle);
+    
+
     }
   }
+
     </script>
 </body>
 </html>
