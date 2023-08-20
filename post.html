@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-  /*얜 아직 댓글기능+스크롤 분리 기능 추가해야함*/
     <title>글 보기</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js"></script>
     <style>
-        /* 이전에 있던 스타일들은 그대로 두고, 추가한 스타일을 아래에 작성합니다 */
-
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -16,32 +12,36 @@
             padding: 0;
         }
 
-        #nickname-search {
-            font-size: 18px;
-            color: black;
-            font-weight:normal;
-        }
-
         #post-title {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
-            border: 1px solid #ccc; /* 테두리 추가 */
-            padding: 5px;
+            display: flex;
+            justify-content: space-between;
         }
 
         #post-content-container {
-            /* 글 내용을 담는 박스의 스타일 설정 */
-            border: 1px solid #ccc; /* 테두리 추가 */
+            border: 1px solid #ccc;
             padding: 10px;
-            overflow-y: scroll; /* 스크롤이 보이도록 설정 */
-            height: 400px; /* 스크롤 가능한 영역 높이 */
+            overflow-y: scroll;
+            width: 100%;
+            height: 80vh; /* 박스 높이를 전체 화면으로 설정 */
+            box-sizing: border-box; /* padding과 border 크기를 height에 포함시키도록 설정 */
         }
 
+       
         #post-content {
             font-size: 16px;
-            white-space: pre-wrap; /* 줄바꿈을 표시하기 위해 사용합니다 */
+            white-space: pre-wrap;
+            
         }
+
+
+        #post-date {
+            font-size: 12px;
+            color: #888;
+        }
+
     </style>
 </head>
 <body>
@@ -51,49 +51,30 @@
         </div>
         <div id="content">
             <div id="centered-content">
-                <!-- 글 제목 -->
-                <div id="post-title"></div>
-
                 <!-- 글 내용 -->
                 <div id="post-content-container">
+                    <!-- 글 제목과 작성 날짜 -->
+                    <div id="post-title">
+                        <span id="title-text"></span>
+                        <span id="post-date"></span>
+                    </div>
+                    <!-- 글 본문 -->
                     <div id="post-content"></div>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        // URL 파라미터에서 글 제목 가져오기
+        // URL 파라미터에서 글 제목과 글 내용 가져오기
         const urlParams = new URLSearchParams(window.location.search);
         const postTitle = urlParams.get('title');
+        const postContent = urlParams.get('content');
+        const postDate = urlParams.get('date');  // 작성 날짜를 가져옵니다
 
-        // 글 제목을 채워줍니다
-        document.getElementById('post-title').innerText = postTitle;
-
-        // 글 내용을 동적으로 가져오는 함수
-        function fetchPostContent() {
-            // TODO: 글 제목을 서버에 전달하여 해당 글의 내용을 가져오는 로직을 추가해야 합니다.
-            // 서버에서 가져온 글 내용을 postContent 변수에 저장하고 아래 코드에서 사용하세요.
-            const postContent = "여기에 글 내용을 동적으로 불러온 값으로 대체하세요.";
-
-            // 글 내용을 채워줍니다
-            document.getElementById('post-content').innerText = postContent;
-        }
-
-        // 최초 페이지 로드 시 글 내용을 가져오도록 합니다
-        fetchPostContent();
-
-        // 만약 글 내용이 많아서 스크롤이 필요하다면, 자동으로 스크롤 가능한 영역의 높이를 조정하도록 합니다
-        function adjustScrollHeight() {
-            const postContentContainer = document.getElementById('post-content-container');
-            const availableHeight = window.innerHeight - postContentContainer.getBoundingClientRect().top;
-            postContentContainer.style.height = availableHeight + 'px';
-        }
-
-        // 창 크기가 변경될 때 스크롤 가능한 영역 높이 재조정
-        window.addEventListener('resize', adjustScrollHeight);
-
-        // 최초 페이지 로드 시 스크롤 가능한 영역 높이 설정
-        adjustScrollHeight();
+        // 글 제목과 내용, 작성 날짜를 채워줍니다
+        document.getElementById('title-text').innerText = postTitle;
+        document.getElementById('post-content').innerText = postContent;
+        document.getElementById('post-date').innerText = postDate;  // 작성 날짜를 채워줍니다
     </script>
 </body>
 </html>
