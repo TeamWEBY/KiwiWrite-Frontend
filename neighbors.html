@@ -50,7 +50,7 @@
                     <button id="save-button">작성</button>
                 </div>
                 <button id="write-button" onclick="toggleEditor()">글쓰기</button>
-                <ul id="post-list"></ul>
+                <ul id="post-list" onclick="goToPost(event)" onmouseover="changeCursor('pointer')" onmouseout="changeCursor('default')"></ul>
             
             </div>
         </div>
@@ -64,6 +64,7 @@
         function changeCursor(cursorType) {
             // 마우스 커서 모양 변경
             document.getElementById("logo").style.cursor = cursorType;
+            document.getElementById("post-list").style.cursor = cursorType;
         }
 
         function goToHomePage() {
@@ -74,6 +75,19 @@
         function goToSeacher(){
             window.location.href="search.html";
         }
+
+        function goToPost(event) {
+    // 클릭한 요소의 태그 이름이 "LI"인 경우에만 처리
+    if (event.target.tagName === "LI") {
+      // 클릭한 글 제목의 텍스트를 가져와서 post.html로 이동
+      const postTitle = event.target.innerText;
+      window.location.href = "post.html?title=" + encodeURIComponent(postTitle);
+
+    }
+}
+
+    
+
     </script>
 </body>
 </html>
